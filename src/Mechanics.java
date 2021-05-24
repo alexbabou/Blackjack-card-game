@@ -22,9 +22,13 @@ public class Mechanics {
 
     String playerCards() {
         String rtn = "";
-        for (Cards card : dealerDeck) {
+        for (Cards card : playerDeck) {
             rtn += card.toString() + " ";
         }
         return rtn;
+    }
+
+    void hit() {
+        playerDeck.add(gameDeck.takeCard());
     }
 }

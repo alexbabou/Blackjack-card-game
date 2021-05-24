@@ -25,9 +25,20 @@ public class Controller extends View {
 
     void processCmds(String cmd) {
         switch (cmd) {
-            case "s", "S" -> gameStart();
-            case "x", "X" -> gameStatus = false;
-            default -> menuScreen();
+            case "start":
+                gameStart();
+                break;
+            case "exit":
+                gameStatus = false;
+                break;
+            case "h":
+            case "H":
+                hit();
+                dealerScreen();
+                break;
+            default:
+                menuScreen();
+                gameControls();
         }
     }
 }

@@ -18,8 +18,17 @@ public class View extends Mechanics {
     }
 
     void menuScreen() {
-        renderText("(S) - Start a new game\n" +
-                "(X) - Exit to IDE\n");
+        renderText("(start) - Begin a new game\n" +
+                "(exit) - Exit to IDE\n\n");
+    }
+
+    void gameControls() {
+        renderText("Game Controls:\n" +
+                "(H) - Hit\n" + "(S) - Stand\n");
+    }
+
+    void clearScreen() {
+        renderText("\n\n\n\n\n\n\n\n\n\n\n");
     }
 
     void startScreen() {
@@ -32,7 +41,9 @@ public class View extends Mechanics {
 
     void gameScreen() {
         initGame();
+        clearScreen();
         bettingScreen();
+        clearScreen();
         dealerScreen();
     }
 
@@ -40,31 +51,26 @@ public class View extends Mechanics {
         Scanner scnr = new Scanner(System.in);
         renderText(String.format("_________________________\n" +
                 "X                       X\n" +
-                "X                       X\n" +
                 "X   How much would you  X\n" +
                 "X      like to bet?     X\n" +
-                "X                       X\n" +
-                "_________________________\n" +
+                "X_______________________X\n" +
                 "Name: %s | Balance: %s\n", player.getName(), player.getBalance()));
         player.setBet(scnr.nextInt());
         dealer.addBal(player.getBet());
     }
 
     void dealerScreen() {
-        renderText(String.format("X_______________________X\n" +
-                "X          %s          X\n" +
+        renderText(String.format("_________________________\n" +
+                "X Dealer Hand: %-8s X\n" +
                    "X                       X\n" +
-                   "X                       X\n" +
-                   "X                       X\n" +
-                   "X          %s         X\n" +
+                   "X Your Hand: %-10s X\n" +
                    "X_______________________X\n" +
-                   "Current Bet: %s\n" +
+                   "\nCurrent Bet: %s\n" +
                    "Name: %s | Balance: %s\n", dealerCards(), playerCards(), player.getBet(), player.getName(), player.getBalance()));
+        gameControls();
     }
 
     void endScreen() {
         renderText("Thank you for playing!");
     }
-
-
 }
