@@ -6,7 +6,7 @@ import java.util.ArrayList;
  */
 public class Player {
     private String pName;
-    private int pBal;
+    private int pBal = 0;
     private int currentBet;
 
     Player() {
@@ -14,17 +14,8 @@ public class Player {
         this.pBal = 15000;
     }
 
-    Player(String pName, int pBal) {
+    Player(String pName) {
         this.pName = pName;
-        this.pBal = pBal;
-    }
-
-    void addBal(int amount) {
-        pBal += amount;
-    }
-    
-    void removeBal(int amount) {
-        pBal -= amount;
     }
     
     void setName(String pName) {
@@ -44,11 +35,20 @@ public class Player {
     }
 
     void setBet(int currentBet) {
-        removeBal(currentBet);
+        pBal -= currentBet;
         this.currentBet = currentBet;
     }
 
     int getBet() {
         return currentBet;
+    }
+
+    int win() {
+        this.pBal += currentBet * 2;
+        return currentBet * 2;
+    }
+
+    void draw() {
+        this.pBal += currentBet;
     }
 }

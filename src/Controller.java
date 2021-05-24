@@ -20,25 +20,33 @@ public class Controller extends View {
 
     void gameStart() {
         startScreen();
-        gameScreen();
+        bettingScreen();
     }
 
     void processCmds(String cmd) {
         switch (cmd) {
-            case "start":
-                gameStart();
-                break;
-            case "exit":
-                gameStatus = false;
-                break;
-            case "h":
-            case "H":
+            case "start", "restart" -> gameStart();
+            case "exit" -> gameStatus = false;
+            case "h", "H" -> {
                 hit();
-                dealerScreen();
-                break;
-            default:
+                if (!stand) dealerScreen();
+                else dealerScreen2();
+            }
+            case "s", "S" -> {
+                stand();
+                dealerScreen2();
+            }
+            case "ok" -> {
+                playerDeck.clear();
+                dealerDeck.clear();
+                player.setBet(0);
+                stand = false;
+                bettingScreen();
+            }
+            default -> {
                 menuScreen();
                 gameControls();
+            }
         }
     }
 }

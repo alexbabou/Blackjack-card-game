@@ -23,6 +23,7 @@ public class Deck {
     }
 
     Cards takeCard() {
+        if (deck.isEmpty()) { resetDeck(); }
         Cards card = deck.remove(0);
         discard.add(card);
         return card;

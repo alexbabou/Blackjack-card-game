@@ -26,4 +26,21 @@ public enum Cards {
         }
         return rtn;
     }
+    public int toInt() {
+        int rtn;
+        switch (this) {
+            case ace -> rtn = 11;
+            case two -> rtn = 2;
+            case three -> rtn = 3;
+            case four -> rtn = 4;
+            case five -> rtn = 5;
+            case six -> rtn = 6;
+            case seven -> rtn = 7;
+            case eight -> rtn = 8;
+            case nine -> rtn = 9;
+            case ten, jack, queen, king -> rtn = 10;
+            default -> rtn = 0;
+        }
+        return rtn;
+    }
 }

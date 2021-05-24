@@ -5,72 +5,127 @@ import java.util.Scanner;
  * Created by Alex Babou on 5/23/21.
  */
 public class View extends Mechanics {
-    Player player = new Player();
-    Player dealer = new Player("Dealer", player.getBalance() * 10);
 
     private void renderText(String text) {
         System.out.println(text);
     }
 
     void splashScreen() {
-        renderText("Welcome to BlackJack 1.0!");
+        renderText("Welcome to BlackJack 1.0!\n");
         menuScreen();
     }
 
     void menuScreen() {
-        renderText("(start) - Begin a new game\n" +
-                "(exit) - Exit to IDE\n\n");
+        renderText("""
+                (start) - Begin a new game
+                (exit) - Exit to IDE
+
+                """);
     }
 
     void gameControls() {
-        renderText("Game Controls:\n" +
-                "(H) - Hit\n" + "(S) - Stand\n");
+        renderText("""
+                Game Controls:
+                (H) to Hit | (S) to Stand
+                """);
     }
 
     void clearScreen() {
-        renderText("\n\n\n\n\n\n\n\n\n\n\n");
+        renderText("\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
     void startScreen() {
         Scanner scnr = new Scanner(System.in);
-        renderText("What would you like to be called? (String)");
+        clearScreen();
+        renderText("""
+                _________________________
+                X                       X
+                X  What would you like  X
+                X     to be called?     X
+                X_______________________X
+                """);
         player.setName(scnr.next());
-        renderText("How much would you like to start with? (Integer)");
+        clearScreen();
+        renderText("""
+                _________________________
+                X                       X
+                X  How much would you   X
+                X  like to start with?  X
+                X_______________________X
+                """);
         player.setBalance(scnr.nextInt());
     }
 
-    void gameScreen() {
-        initGame();
-        clearScreen();
-        bettingScreen();
-        clearScreen();
-        dealerScreen();
-    }
-
     void bettingScreen() {
-        Scanner scnr = new Scanner(System.in);
-        renderText(String.format("_________________________\n" +
-                "X                       X\n" +
-                "X   How much would you  X\n" +
-                "X      like to bet?     X\n" +
-                "X_______________________X\n" +
-                "Name: %s | Balance: %s\n", player.getName(), player.getBalance()));
-        player.setBet(scnr.nextInt());
-        dealer.addBal(player.getBet());
+        clearScreen();
+        if (player.getBalance() < 50) {
+            renderText("""
+                _________________________
+                X       Game Over       X
+                X                       X
+                X    You lost it all.   X
+                X_______________________X
+                
+                Type 'restart' or 'exit'
+                """);
+        } else {
+            Scanner scnr = new Scanner(System.in);
+            renderText(String.format("""
+                    _________________________
+                    X                       X
+                    X    Place your bet:    X
+                    X       (min: 50)       X
+                    X_______________________X
+                    Name: %s | Balance: %s
+                    """, player.getName(), player.getBalance()));
+            player.setBet(scnr.nextInt());
+            if (player.getBet() < 50)
+                bettingScreen();
+            else {
+                initGame();
+                dealerScreen();
+            }
+        }
     }
 
     void dealerScreen() {
-        renderText(String.format("_________________________\n" +
-                "X Dealer Hand: %-8s X\n" +
-                   "X                       X\n" +
-                   "X Your Hand: %-10s X\n" +
-                   "X_______________________X\n" +
-                   "\nCurrent Bet: %s\n" +
-                   "Name: %s | Balance: %s\n", dealerCards(), playerCards(), player.getBet(), player.getName(), player.getBalance()));
+        clearScreen();
         gameControls();
+        renderText(String.format("""
+                        _________________________
+                        X Dealer Hand: %-9sX
+                        X Total:                X
+                        X                       X
+                        X Your Hand: %-10s X
+                        X Total: %-14s X
+                        X_______________________X
+                        Current Bet: %s
+                        Name: %s | Balance: %s
+                        """, dealerCards(false), displayCards(playerDeck), cardCounter(playerDeck),
+                player.getBet(), player.getName(), player.getBalance()));
+    }
+
+    void dealerScreen2() {
+        clearScreen();
+        renderText("//// " + gameOutcome() + " ////");
+        renderText(String.format("""
+                        _________________________
+                        X Dealer Hand: %-8s X
+                        X Total: %-14s X
+                        X                       X
+                        X Your Hand: %-10s X
+                        X Total: %-14s X
+                        X_______________________X
+                        Current Bet: %s
+                        Name: %s | Balance: %s
+                        """, displayCards(dealerDeck), cardCounter(dealerDeck), displayCards(playerDeck), cardCounter(playerDeck),
+                player.getBet(), player.getName(), player.getBalance()));
+
+        renderText("Type 'ok' to continue...");
     }
 
     void endScreen() {
+        clearScreen();
         renderText("Thank you for playing!");
     }
 }
