@@ -9,18 +9,23 @@ public class Deck {
     ArrayList<Cards> deck = new ArrayList<>();
     ArrayList<Cards> discard = new ArrayList<>();
 
-    void createDeck(int decks) {
+    Deck() {
+        createDeck();
+    }
+
+    void createDeck() {
         for (Cards card : Cards.values()) {
-            for (int i = 0; i < decks; i++) {
+            for (int i = 0; i < 4; i++) {
                 deck.add(card);
             }
         }
         Collections.shuffle(deck);
     }
 
-    void removeCard(Cards card) {
-        deck.remove(card);
+    Cards takeCard() {
+        Cards card = deck.remove(0);
         discard.add(card);
+        return card;
     }
 
     void resetDeck() {

@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * Title: Blackjack
  * Created by Alex Babou on 5/23/21.
@@ -5,9 +7,10 @@
 public class Player {
     private String pName;
     private int pBal;
+    private int currentBet;
 
-    Player(String pName) {
-        this.pName = pName;
+    Player() {
+        this.pName = "Player";
         this.pBal = 15000;
     }
 
@@ -15,8 +18,8 @@ public class Player {
         this.pName = pName;
         this.pBal = pBal;
     }
-    
-    void addBalance(int amount) {
+
+    void addBal(int amount) {
         pBal += amount;
     }
     
@@ -38,5 +41,14 @@ public class Player {
 
     int getBalance() {
         return pBal;
+    }
+
+    void setBet(int currentBet) {
+        removeBal(currentBet);
+        this.currentBet = currentBet;
+    }
+
+    int getBet() {
+        return currentBet;
     }
 }

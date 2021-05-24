@@ -9,7 +9,7 @@ public class Controller extends View {
 
     void run() {
         Scanner scnr = new Scanner(System.in);
-        startScreen();
+        splashScreen();
         gameStatus = true;
 
         while (gameStatus) {
@@ -19,8 +19,8 @@ public class Controller extends View {
     }
 
     void gameStart() {
-        GameEngine ge = new GameEngine();
-        ge.run();
+        startScreen();
+        gameScreen();
     }
 
     void processCmds(String cmd) {
