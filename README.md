@@ -9,6 +9,3 @@ A commandline blackjack game created using ArrayLists and Collections.
 
 ## Demo
 <img src="https://dendev.net/Demos/BlackJack.gif"/>
-
-## Notes
-I might add a running count later for counting cards.
